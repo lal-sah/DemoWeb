@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<body>
+	<ui:composition template="/WEB-INF/templates/template.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<h:messages />
+				<table border="0" cellpadding="0" cellspacing="0" width="90%"
+					align="left">
+					<tr>
+						<td colspan="2"><h4>Add Order</h4></td>
+					</tr>
+					<tr>
+						<td>Customer Name:</td>
+						<td><h:inputText value="#{orderController.order.customer}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><h5>Current Items in your Order:</h5></td>
+					</tr>
+					<tr>
+						<td colspan="2"><c:if
+								test="#{!orderController.order.items.isEmpty()}">
+								<h:dataTable value="#{orderController.order.items}" var="item"
+									border="1" cellpadding="0" cellspacing="1"
+									style="horizontal-align: center;" bgcolor="#dfdfdf"
+									title="Current Items in your Order">
+									<h:column>
+										<f:facet name="header">Product Id </f:facet>
+										<h:outputText value="#{item.id}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">Product Name </f:facet>
+										<h:outputText value="#{item.product}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">Product Name </f:facet>
+										<h:outputText value="#{item.price}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">Product Name </f:facet>
+										<h:outputText value="#{item.quantity}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header"></f:facet>
+										<h:commandButton
+											action="#{orderController.deleteItem(item.viewId)}"
+											value="Delete Item" />
+									</h:column>
+								</h:dataTable>
+							</c:if></td>
+					</tr>
+					<tr>
+						<td colspan="2">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><h5>Add Item</h5></td>
+					</tr>
+					<tr>
+						<td>Product:</td>
+						<td><h:inputText value="#{orderController.product}" /></td>
+					</tr>
+					<tr>
+						<td>Price:</td>
+						<td><h:inputText value="#{orderController.price}" /></td>
+					</tr>
+					<tr>
+						<td>Quantity:</td>
+						<td><h:inputText value="#{orderController.quantity}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><h:commandButton
+								action="#{orderController.addItem()}" value="Add Item" />&nbsp;
+							<h:commandButton action="#{orderController.addOrder()}"
+								value="Add Order" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

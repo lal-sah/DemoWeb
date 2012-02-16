@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx">
+
+	<jee:jndi-lookup id="dataSource"
+		jndi-name="java:comp/env/jdbc/SourceAlliesDemoDS" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.sourceallies.demo.entity.Order</value>
+				<value>com.sourceallies.demo.entity.Item</value>
+			</list>
+		</property>
+		<property name="schemaUpdate" value="true" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<!-- <bean id="orderDao" class="com.sourceallies.demo.dao.impl.OrderDaoImpl"> 
+		<property name="sessionFactory" ref="sessionFactory" /> </bean> -->
+
+	<context:component-scan base-package="com.sourceallies" />
+	<!-- <context:component-scan base-package="com.sourceallies.demo.service.impl" 
+		/> <context:component-scan base-package="com.sourceallies.demo.dao" /> <context:component-scan 
+		base-package="com.sourceallies.demo.dao.impl" /> <context:component-scan 
+		base-package="com.sourceallies.demo.web.controller" /> -->
+
+	<context:annotation-config />
+
+	<import resource="spring-ws-servlet.xml" />
+</beans>

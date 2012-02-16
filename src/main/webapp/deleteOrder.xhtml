@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<h4>Delete Order</h4>
+			<table width="50%" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><label for="orderId">Order Id: </label></td>
+					<td><h:inputText value="#{orderController.orderId}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><h:commandButton value="Delete Order"
+							action="#{orderController.deleteOrder()}" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

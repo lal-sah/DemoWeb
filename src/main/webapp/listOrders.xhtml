@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<c:if test="#{!orderController.orders.isEmpty()}">
+			<h4>Current Orders</h4>
+			<h5>Select an Order to View Details / Update Order Information</h5>
+			<h:form>
+				<h:dataTable align="left" value="#{orderController.orders}"
+					var="order" cellpadding="1" cellspacing="1" border="1"
+					bgcolor="#dfdfdf">
+					<h:column headerClass="tableHeader">
+						<f:facet name="header">Order Id</f:facet>
+						<h:commandLink action="#{orderController.findOrderById(order.id)}"
+							value="#{order.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Customer Name</f:facet>
+						<h:outputText value="#{order.customer}" />
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</c:if>
+		<c:if test="#{orderController.orders.isEmpty()}">
+		No matching orders found!
+		</c:if>
+		<br />
+		<br />
+		<br />
+	</ui:define>
+</ui:composition>
+</html>

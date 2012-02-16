@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+
+	<sws:annotation-driven />
+
+	<!-- Web Service Consumer -->
+	<bean id="messageFactory"
+		class="org.springframework.ws.soap.axiom.AxiomSoapMessageFactory">
+		<property name="payloadCaching" value="false" />
+	</bean>
+	<!-- <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory" 
+		/> -->
+
+	<!-- Marshalling -->
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="com.cdyne.ws.weatherws" />
+	</bean>
+
+	<!-- Unmarshalling -->
+	<bean id="unmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="com.cdyne.ws.weatherws" />
+	</bean>
+
+	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="defaultUri" value="http://wsf.cdyne.com/WeatherWS/Weather.asmx" />
+		<!-- <property name="defaultUri" value="http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl" 
+			/> -->
+		<property name="marshaller" ref="marshaller" />
+		<property name="unmarshaller" ref="unmarshaller" />
+	</bean>
+
+
+	<bean id="soapAction" class="java.lang.String">
+		<constructor-arg name="original"
+			value="http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP" />
+	</bean>
+	<!-- <bean id="weatherServiceClient" class="com.sourceallies.webservices.WeatherServiceClient"> 
+		<property name="webServiceTemplate" ref="webServiceTemplate" /> <property 
+		name="soapAction" value="http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP" 
+		/> </bean> -->
+
+	<!-- <context:annotation-config /> <context:component-scan base-package="com.sourceallies" 
+		/> <context:component-scan base-package="com.sourceallies.webservices" /> -->
+
+</beans>

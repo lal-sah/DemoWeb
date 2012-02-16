@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<!-- Default set of monitored resources -->
+	<!-- <WatchedResource>WEB-INF/web.xml</WatchedResource> -->
+	<!-- MySQL Connection -->
+	<!-- <Resource name="jdbc/SourceAlliesDemoDS" auth="Container" type="javax.sql.DataSource" 
+		username="root" password="" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/test" 
+		maxActive="8" maxIdle="4" /> -->
+
+	<!-- HSQLDB Connection -->
+	<Resource name="jdbc/SourceAlliesDemoDS" auth="Container"
+		type="javax.sql.DataSource" username="sa" password=""
+		driverClassName="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:mem:testdb"
+		maxActive="8" maxIdle="4" />
+</Context>

@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:form>
+	<a href="index.jsf">Home</a>
+	<br />
+	<h:commandLink action="#{orderController.newAddOrderPage()}"
+		value="Add Order" />
+	<br />
+	<a href="deleteOrder.jsf">Delete Order</a>
+	<br />
+	<a href="findOrderById.jsf">Find Order By Id</a>
+	<br />
+	<h:commandLink action="#{orderController.listOrders()}"
+		value="Find All Orders" />
+	<br />
+</h:form>
+</html>
